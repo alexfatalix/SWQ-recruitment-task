@@ -16,6 +16,11 @@ test.beforeEach(async ({ loginPage }) => {
   })
 
   test('Unsuccessful login with wrong email', async ({ loginPage }) => {
+    await loginPage.login(fakerUK.internet.domainName(), fakerUK.internet.password())
+    await expect(loginPage.passwordValidationMessage, "Error message is missing").toContainText("Перевір правильність введення")
+  })
+
+  test('Unsuccessful login with non-existing email', async ({ loginPage }) => {
     await loginPage.login(fakerUK.internet.email(), fakerUK.internet.password())
-    await expect(loginPage.passwordValidationMessage).toContainText("Обліковий запис не знайдений")
+    await expect(loginPage.passwordValidationMessage, "Error message is missing").toContainText("Обліковий запис не знайдений")
   })
